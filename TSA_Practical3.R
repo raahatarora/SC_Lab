@@ -1,0 +1,13 @@
+library(datasets)
+data("AirPassengers")
+
+# Decompose time series
+air_decomp <- decompose(AirPassengers)
+
+# Correct plot syntax
+plot(air_decomp, col = "darkgreen", lwd = 2)
+
+# View components
+air_decomp$trend
+air_decomp$seasonal
+air_decomp$random

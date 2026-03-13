@@ -1,0 +1,60 @@
+
+---
+title: "Bank_pr5"
+author: "Raahat"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+```{r}
+# Set working directory (change path as needed)
+setwd("D:/raahat_230957216")
+
+# Import data from a text file
+
+loan_data <- scan("bank_case.txt")
+
+# View first few observations
+head(loan_data)
+
+
+loan_ts <- ts(loan_data,
+              start = c(2000, 1),
+              frequency = 12)
+
+# Check structure
+loan_ts
+
+
+plot(loan_ts,
+     main = "Monthly Commercial Bank Real Estate Loans",
+     xlab = "Time",
+     ylab = "Loans (Billions of Dollars)",
+     col = "blue")
+
+
+# ACF plot
+acf(loan_ts,
+    main = "ACF of Real Estate Loan Series")
+
+# PACF plot
+pacf(loan_ts,
+     main = "PACF of Real Estate Loan Series")
+
+
+# Load package
+library(tseries)
+
+# Perform ADF test
+adf.test(loan_ts)
+
+
+loan_diff <- diff(loan_ts)
+
+plot(loan_diff,
+     main = "Differenced Loan Series")
+
+acf(loan_diff)
+pacf(loan_diff)
+adf.test(loan_diff)
+```
+

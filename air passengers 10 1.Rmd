@@ -1,0 +1,43 @@
+---
+title: "air_pass_pr10"
+author: "Raahat"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+```{r}
+
+
+# Load library
+library(forecast)
+
+# Load AirPassengers dataset (already available in R)
+data("AirPassengers")
+
+# Convert to time series (already monthly, but assign to variable)
+ap_ts <- AirPassengers
+
+# Plot original data
+plot(ap_ts,
+     main = "Monthly Airline Passengers",
+     xlab = "Year",
+     ylab = "Number of Passengers (thousands)")
+
+# Fit ARIMA model automatically
+model <- auto.arima(ap_ts)
+
+# Display model summary
+summary(model)
+
+# Forecast next 12 months
+forecast_ap <- forecast(model, h = 12)
+
+# Print forecast values
+print(forecast_ap)
+
+# Plot forecast
+plot(forecast_ap,
+     main = "12-Month Forecast of Airline Passengers",
+     xlab = "Year",
+     ylab = "Passengers (thousands)")
+```
+

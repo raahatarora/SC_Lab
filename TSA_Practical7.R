@@ -1,0 +1,54 @@
+
+setwd("D:/raahat_230957216")
+
+loan_data <- scan("bank_case.txt")
+
+head(loan_data)
+
+# Convert to time series (monthly frequency = 12)
+loan_ts <- ts(loan_data, start = c(2000, 1), frequency = 12)
+
+# View time series
+loan_ts
+
+plot(loan_ts,
+     main = "Monthly Commercial Bank Real Estate Loans",
+     ylab = "Loans (Billions of Dollars)",
+     xlab = "Time",
+     col = "blue")
+
+decomp <- decompose(loan_ts)
+plot(decomp)
+
+par(mfrow = c(1,2))
+
+acf(loan_ts, main = "ACF of Original Series")
+pacf(loan_ts, main = "PACF of Original Series")
+
+# Install if not already installed
+install.packages("tseries")
+library(tseries)
+
+adf.test(loan_ts)
+
+loan_diff <- diff(loan_ts, differences = 1)
+
+plot(loan_diff, main = "First Differenced Series", col = "red")
+
+par(mfrow = c(1,2))
+acf(loan_diff, main = "ACF of Differenced Series")
+pacf(loan_diff, main = "PACF of Differenced Series")
+
+# ADF test again
+adf.test(loan_diff)
+
+# Automatic model selection
+install.packages("forecast")
+library(forecast)
+
+final_model <- auto.arima(loan_ts)
+summary(final_model)
+
+checkresiduals(final_model)
+
+

@@ -1,0 +1,44 @@
+
+---
+title: "US_pop_pr1"
+author: "Raahat"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+```{r}
+library(readxl)
+
+setwd("C:/Users/maths/Desktop/raahat_230957216")
+
+getwd()
+
+list.files()
+
+us_pop <- read_excel("US_Population.xlsx")
+
+print(us_pop)
+
+library(stats)
+
+us_ts <- ts(us_pop[[1]], start = 1790, frequency = 0.1)
+
+us_pop_million <- us_pop[[1]] / 1000000
+
+us_ts <- ts(us_pop_million, start = 1790, frequency = 0.1)
+
+plot(us_ts,
+     main = "US Population Over Time",
+     xlab = "Year",
+     ylab = "Population (in Millions)",
+     col = "blue",
+     lwd = 2)
+
+#The data shows a strong upward trend
+
+#No seasonal component is present
+
+#Minor irregular fluctuations
+
+#Trend component dominates the series
+```
+
